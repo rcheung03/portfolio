@@ -35,7 +35,7 @@ nav a {
 
 nav a:hover {
     border-bottom: 0.4em solid var(--color-accent);
-    background-color: oklch(from var(--color-accent) 95% 5% h);
+    background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
     padding-bottom: 0.1em;
 }
 
@@ -136,4 +136,26 @@ h1 {
 .resume-section ul {
   margin: 0;
   padding-left: 1.2em;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+nav {
+  --border-color: oklch(50% 10% 200 / 40%);
+}
+
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+}
+
+input,
+textarea,
+button,
+select {
+    font: inherit;
 }
