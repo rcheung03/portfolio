@@ -176,3 +176,100 @@ select {
   margin: 0;
   text-align: left;
 }
+
+.year {
+  color: #666;
+  font-style: italic;
+}
+
+#projects-plot {
+  max-width: 20em;
+  margin-block: 2em;
+  overflow: visible;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 1em;
+  padding: 1em;
+  border: 1px solid currentColor;
+  margin-top: 1em;
+  list-style: none;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.swatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: var(--color);
+  border-radius: 50%;
+}
+
+.chart-container {
+  display: flex;
+  align-items: start;
+  gap: 2em;
+  margin: 2em 0;
+}
+
+#projects-plot {
+  max-width: 20em;
+  overflow: visible;
+}
+
+.legend {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 1em;
+  padding: 1em;
+  border: 1px solid currentColor;
+  list-style: none;
+}
+
+.searchBar {
+  display: block;
+  width: 100%;
+  max-width: 30em;
+  padding: 0.5em;
+  margin: 1em 0;
+  font: inherit;
+  border: 1px solid currentColor;
+  border-radius: 0.25em;
+}
+
+#projects-plot path {
+  transition: opacity 300ms;
+}
+
+#projects-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+#projects-plot path {
+  transition: opacity 300ms;
+  cursor: pointer;
+}
+
+#projects-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+}
+
+.selected:is(path) {
+  fill: var(--color);
+}
+
+path {
+  cursor: pointer;
+}

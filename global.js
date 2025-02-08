@@ -1,6 +1,5 @@
 export async function fetchJSON(url) {
   try {
-      // Fetch the JSON file from the given URL
       const response = await fetch(url);
       
       if (!response.ok) {
@@ -37,7 +36,10 @@ export function renderProjects(project, containerElement, headingLevel = 'h2') {
   article.innerHTML = `
       <${headingLevel}>${project.title || 'Untitled Project'}</${headingLevel}>
       <img src="${project.image || ''}" alt="${project.title || 'Project image'}">
-      <p>${project.description || 'No description available.'}</p>
+      <div>
+          <p>${project.description || 'No description available.'}</p>
+          <p class="year">c. ${project.year || '2024'}</p>
+      </div>
   `;
 
   containerElement.appendChild(article);
@@ -47,9 +49,8 @@ export async function fetchGitHubData(username) {
   return fetchJSON(`https://api.github.com/users/${username}`);
 }
 
-
-console.log('IT’S ALIVE!');
-console.log('Current pathname:', location.pathname);  // Add this line here
+console.log('ITS ALIVE!');
+console.log('Current pathname:', location.pathname);
 
 function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
@@ -63,36 +64,37 @@ let pages = [
     { url: 'contact', title: 'Contact' },
     { url: 'resume', title: 'Resume' },
     { url: 'https://github.com/rcheung03', title: 'GitHub' }
-  ];
+];
+
 let nav = document.createElement('nav');
 document.body.prepend(nav);
 
 for (let p of pages) {
- let url = p.url;
- let title = p.title;
- 
- url = !ARE_WE_HOME && !url.startsWith('http') ? '../' + url : url;
- 
- let a = document.createElement('a');
- a.href = url;
- a.textContent = title;
+  let url = p.url;
+  let title = p.title;
+  
+  url = !ARE_WE_HOME && !url.startsWith('http') ? '../' + url : url;
+  
+  let a = document.createElement('a');
+  a.href = url;
+  a.textContent = title;
 
-   // Add these three lines here
-console.log('Link URL:', url);
-console.log('Link pathname:', a.pathname);
-console.log('Pathname comparison:', a.pathname === location.pathname);
- 
-a.classList.toggle(
-    'current',
-    a.host === location.host && a.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '')
+  console.log('Link URL:', url);
+  console.log('Link pathname:', a.pathname);
+  console.log('Pathname comparison:', a.pathname === location.pathname);
+  
+  a.classList.toggle(
+      'current',
+      a.host === location.host && a.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '')
   );
- 
- if (a.host !== location.host) {
-   a.target = "_blank";
- }
- 
- nav.append(a);
+  
+  if (a.host !== location.host) {
+    a.target = "_blank";
+  }
+  
+  nav.append(a);
 }
+
 document.body.insertAdjacentHTML(
     'afterbegin',
     `<label class="color-scheme">
@@ -103,9 +105,8 @@ document.body.insertAdjacentHTML(
         <option value="dark">Dark</option>
       </select>
     </label>`
-  );
-  
-  // Optional: Show current system theme
+);
+
 const darkModePreference = window.matchMedia("(prefers-color-scheme: dark)").matches;
 const autoText = darkModePreference ? "Automatic (Dark)" : "Automatic (Light)";
 document.querySelector('.color-scheme option[value="light dark"]').textContent = autoText;
@@ -118,10 +119,9 @@ if ("colorScheme" in localStorage) {
     select.value = savedScheme;
 }
 
-// Add event listener for theme changes
 select.addEventListener('input', function (event) {
     const newScheme = event.target.value;
     console.log('color scheme changed to', newScheme);
     document.documentElement.style.setProperty('color-scheme', newScheme);
-    localStorage.colorScheme = newScheme;  // Save to localStorage
+    localStorage.colorScheme = newScheme;
 });
