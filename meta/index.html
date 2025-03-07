@@ -5,15 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meta Analysis - Ryan Cheung</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Timeline control styling */
+        #timeline-control {
+            display: flex;
+            align-items: baseline;
+            margin: 1em 0;
+        }
+        
+        #commit-slider {
+            flex: 1;
+            margin: 0 1em;
+        }
+        
+        #selectedTime {
+            margin-left: auto;
+        }
+        
+        /* File visualization styling */
+        .files {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.5em 1.5em;
+            margin: 2em 0;
+        }
+
+        .files > div {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: subgrid;
+            padding: 0.5em 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .files dt {
+            grid-column: 1;
+            font-weight: normal;
+        }
+
+        .files dd {
+            grid-column: 2;
+            margin: 0;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .files code {
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        /* Tooltip styling */
+        .info.tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            visibility: hidden;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        /* Circle animation */
+        circle {
+            transition: all 200ms;
+        }
+    </style>
 </head>
-<body>
+<body class="meta-page">
     <h1>Code Analysis</h1>
     <p>This page provides analytics and insights about the codebase of this website.</p>
     
     <div id="stats"></div>
     
     <h2>Commits by time of day</h2>
+    
+    <!-- Timeline slider control -->
+    <label id="timeline-control">
+        Show commits until:
+        <input type="range" id="commit-slider" min="0" max="100" value="100">
+        <time id="selectedTime"></time>
+    </label>
+    
     <div id="chart"></div>
+    
+    <div id="files-section">
+        <h2>File Sizes</h2>
+        <dl class="files"></dl>
+    </div>
 
     <dl id="commit-tooltip" class="info tooltip">
         <dt>Commit</dt>
@@ -29,8 +110,46 @@
         <dt>Lines edited</dt>
         <dd id="commit-lines"></dd>
     </dl>
+    
     <p id="selection-count">No commits selected</p>
     <dl id="language-breakdown" class="stats"></dl>
+    <section id="scrolly">
+        <div class="scrolly-content">
+            <div class="step" data-step="1">
+                <h3>The Beginning</h3>
+                <p>This project started with just a few simple files. The initial commit laid the groundwork for what would eventually become a full portfolio website.</p>
+            </div>
+            
+            <div class="step" data-step="2">
+                <h3>Adding Structure</h3>
+                <p>As the project grew, more structure was added. The navigation and basic page templates were created, giving the site its core framework.</p>
+            </div>
+            
+            <div class="step" data-step="3">
+                <h3>Styling Evolution</h3>
+                <p>With the structure in place, focus shifted to styling. CSS files grew significantly during this phase as the visual design took shape.</p>
+            </div>
+            
+            <div class="step" data-step="4">
+                <h3>Adding Interactivity</h3>
+                <p>JavaScript was introduced to add interactivity. Features like dark mode, dynamic navigation, and responsive layouts enhanced the user experience.</p>
+            </div>
+            
+            <div class="step" data-step="5">
+                <h3>Project Showcase</h3>
+                <p>The projects section became more sophisticated, with data-driven content and visualizations to highlight work samples.</p>
+            </div>
+            
+            <div class="step" data-step="6">
+                <h3>Final Refinements</h3>
+                <p>In the final stages, the focus was on refinement and optimization. Bug fixes, performance improvements, and polishing the overall user experience.</p>
+            </div>
+        </div>
+        
+        <div class="scrolly-viz">
+            <div id="timeline-viz"></div>
+        </div>
+    </section>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="../global.js" type="module"></script>
